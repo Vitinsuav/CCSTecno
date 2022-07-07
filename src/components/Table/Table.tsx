@@ -20,30 +20,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
   
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
     
-  }));
-
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 800,
-    height: 500,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    pl: 3,
-};
-  
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
 }));
-
 interface Data {
     name: string,
     data: string,
@@ -78,11 +57,13 @@ const rows = [
     createData('KR', '25/06/2022', '8:00', '01:00', '17:45','07:00',100,'4,80','Atibaia > Campinas','25,00'),
     createData('Ática', '26/06/2022', '07:55', '01:00', '17:30','07:00', 100,'4,80','Atibaia > Campinas','25,00'),
     createData('TecnoLock', '27/06/2022', '08:30', '01:00', '15:30','07:00', 100,'4,80','Atibaia > Campinas', '25,00'),
+    createData('TecnoLock', '27/06/2022', '08:30', '01:00', '15:30','07:00', 100,'4,80','Atibaia > Campinas', '25,00'),
 ];
 
 export default function StickyHeadTable() {
+
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(6);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -93,13 +74,9 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
-  const [EditRegisterModalOpen, setEditRegisterModalOpen] = React.useState(false);
-  const handleOpenEditRegisterModal = () => setEditRegisterModalOpen(true);
-  const handleCloseEditRegisterModal = () => setEditRegisterModalOpen(false);
-
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 460 , alignItems: 'center' }}>
+      <TableContainer sx={{ maxHeight: 465 , alignItems: 'center' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -119,7 +96,8 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-          {rows.map((row) => (
+          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((row) => (
               <StyledTableRow key={row.name}>
                 <StyledTableCell component="th" scope="row">
                   {row.data}
@@ -129,7 +107,7 @@ export default function StickyHeadTable() {
                 <StyledTableCell align="center" style={{ width: 20 }}>{row.intervalo}</StyledTableCell>
                 <StyledTableCell align="center" style={{ width: 20 }}>{row.saida}</StyledTableCell>
                 <StyledTableCell align="center" style={{ width: 20 }}>{row.total}</StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 200}}>Implantação 1 <br></br>Implantação 2<br></br>Implantação 3</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: 200}}>Implantação 1<br></br>Implantação 2<br></br>Implantação 3</StyledTableCell>
                 <StyledTableCell align="center">{row.deslocamento}</StyledTableCell>
                 <StyledTableCell align="center">{row.pedagio}</StyledTableCell>
                 <StyledTableCell align="center">{row.obs}</StyledTableCell>
@@ -141,7 +119,7 @@ export default function StickyHeadTable() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 20]}
+        rowsPerPageOptions={[2, 3, 4]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
@@ -149,7 +127,6 @@ export default function StickyHeadTable() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-
     </Paper>
   );
 }

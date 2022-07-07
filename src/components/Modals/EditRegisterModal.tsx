@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-const style = {
+const Modalstyle = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
@@ -31,11 +31,22 @@ return (
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
     >                 
-        <Box sx={style}>   
-            <Button onClick={requestClose}><CancelIcon></CancelIcon></Button>      
-                <Grid container rowSpacing={4} spacing={2} sx={{pr:5, pl:1}}>
-                    <Grid item xs={12} >
+        <Box sx={Modalstyle}>      
+                <Grid container rowSpacing={4} spacing={2} sx={{pr:5, pl:1, pt:1}}>
+                    <Grid item xs={4} >
                         <h1>Editar cadastro</h1>
+                    </Grid>
+                    <Grid item xs={3}>
+                    
+                    </Grid>
+                    <Grid item xs={3}>
+                    
+                    </Grid>
+                    <Grid item xs={1}>
+                    
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={requestClose}><CancelIcon></CancelIcon></Button>   
                     </Grid>
                     <Grid item xs={3}>
                         <TextField

@@ -45,7 +45,6 @@ export default function ContextMenu() {
 
   return (
     <Box>
-    <div>
       <IconButton
         aria-label="more"
         id="long-button"
@@ -77,17 +76,16 @@ export default function ContextMenu() {
               <Grid item xs={6}><EditIcon/></Grid>
             </Grid>       
           </MenuItem>
-          <MenuItem onClick={handleOpenExcluseModal}>
+          <MenuItem onClick={handleOpenEditRegisterModal}>
             <Grid container spacing={12}>
               <Grid item xs={6}>Excluir</Grid>
               <Grid item xs={6}><DeleteIcon/></Grid>
             </Grid> 
           </MenuItem>
         </Menu>
-    </div>
-
     <ExcluseConfirmationsModal isOpen={excluseModalOpen} requestClose={handleCloseExcluseModal}></ExcluseConfirmationsModal>
     <EditRegisterModal isOpen={editRegisterModalOpen} requestClose={handleCloseEditRegisterModal}></EditRegisterModal>
-    </Box>
+  </Box>
+  
   );
 }

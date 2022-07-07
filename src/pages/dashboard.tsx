@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Content from '../components/Content'
+import Content from '../components/Header/ContentHeader'
 import Header from '../components/Header/Header';
 import { setupAPIClient } from '../services/api';
 import { withSSRAuth } from '../utils/withSSRAuth';
@@ -163,15 +163,8 @@ export default function Paperbase() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-        <CssBaseline />
-        
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <Header />
-          <Box component="main" sx={{ flex: 1, pt: 2,  px: 3, bgcolor: '#eaeff1' }}>
-            <Content />
-          </Box>
-        </Box>
+      <Box>
+        <Content></Content>
       </Box>
     </ThemeProvider>
   );
