@@ -4,8 +4,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Content from '../components/Content'
-import Header from '../components/Header';
-import { useState } from "react";
+import Header from '../components/Header/Header';
+import { setupAPIClient } from '../services/api';
+import { withSSRAuth } from '../utils/withSSRAuth';
 
 
 let theme = createTheme({
@@ -151,7 +152,6 @@ theme = {
   },
 };
 
-const drawerWidth = 200;
 
 export default function Paperbase() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -160,10 +160,6 @@ export default function Paperbase() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -171,7 +167,7 @@ export default function Paperbase() {
         <CssBaseline />
         
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <Header onOpenNewTransactionModal={handleOpen} />
+          <Header />
           <Box component="main" sx={{ flex: 1, pt: 2,  px: 3, bgcolor: '#eaeff1' }}>
             <Content />
           </Box>
@@ -180,4 +176,19 @@ export default function Paperbase() {
     </ThemeProvider>
   );
 }
+
+
+export const getServerSideProps = withSSRAuth(async(ctx) => {
+  const apiClient = setupAPIClient(ctx)   
+  const response = await apiClient.get('/me') 
+
+  return {
+      props: {
+
+      }
+  }
+}, {
+  permissions: ['metrics.list'],
+  roles: ['administrator']
+})
 
