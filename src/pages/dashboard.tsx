@@ -1,41 +1,185 @@
-import { useContext, useEffect } from "react"
-import { Can } from "../components/Can"
-import { AuthContext } from "../contexts/AuthContext"
-import { setupAPIClient } from "../services/api"
-import { api } from "../services/apiClient"
-import { withSSRAuth } from "../utils/withSSRAuth"
+import * as React from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Content from '../components/Content'
+import Header from '../components/Header';
+import { useState } from "react";
+
+let theme = createTheme({
+  palette: {
+    primary: {
+      light: '#63ccff',
+      main: '#009be5',
+      dark: '#006db3',
+    },
+  },
+  typography: {
+    h5: {
+      fontWeight: 500,
+      fontSize: 26,
+      letterSpacing: 0.5,
+    },
+  },
+  shape: {
+    borderRadius: 8,
+  },
+  components: {
+    MuiTab: {
+      defaultProps: {
+        disableRipple: true,
+      },
+    },
+  },
+  mixins: {
+    toolbar: {
+      minHeight: 48,
+    },
+  },
+});
+
+theme = {
+  ...theme,
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#081627',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+        contained: {
+          boxShadow: 'none',
+          '&:active': {
+            boxShadow: 'none',
+          },
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          marginLeft: theme.spacing(1),
+        },
+        indicator: {
+          height: 3,
+          borderTopLeftRadius: 3,
+          borderTopRightRadius: 3,
+          backgroundColor: theme.palette.common.white,
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          margin: '0 16px',
+          minWidth: 0,
+          padding: 0,
+          [theme.breakpoints.up('md')]: {
+            padding: 0,
+            minWidth: 0,
+          },
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          padding: theme.spacing(1),
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          borderRadius: 4,
+        },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'rgb(255,255,255,0.15)',
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&.Mui-selected': {
+            color: '#4fc3f7',
+          },
+        },
+      },
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          fontSize: 14,
+          fontWeight: theme.typography.fontWeightMedium,
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          color: 'inherit',
+          minWidth: 'auto',
+          marginRight: theme.spacing(2),
+          '& svg': {
+            fontSize: 20,
+          },
+        },
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          width: 32,
+          height: 32,
+        },
+      },
+    },
+  },
+};
+
+const drawerWidth = 200;
+
+export default function Paperbase() {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
 
-export default function Dashboard() {
-    const { user, signOut, isAuthenticated } = useContext(AuthContext)
-
-    useEffect(() => {
-        api.get('me').then(response => console.log(response)).catch(e => console.log(e))
-    }, [])
-
-    return(
-        <>
-            <h1> Dashboard: {user?.email} </h1>
-
-            <button onClick={signOut}>Sign Out</button>
-
-            <Can permissions={['metrics.list']}>
-                <div>Metricas</div> 
-            </Can>
-        </>
-
-    )
+  return (
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+        <CssBaseline />
+        
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <Header onOpenNewTransactionModal={handleOpen} />
+          <Box component="main" sx={{ flex: 1, pt: 2,  px: 3, bgcolor: '#eaeff1' }}>
+            <Content />
+          </Box>
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
 }
 
-export const getServerSideProps = withSSRAuth(async(ctx) => {
-    const apiClient = setupAPIClient(ctx)   
-    const response = await apiClient.get('/me') 
-    console.log(response.data)
-   
-
-    return {
-        props: {
-
-        }
-    }
-})
