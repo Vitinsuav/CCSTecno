@@ -12,6 +12,7 @@ import { Box, Button, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -143,13 +144,14 @@ export default function StickyHeadTable() {
                 <StyledTableCell align="center">{row.pedagio}</StyledTableCell>
                 <StyledTableCell align="center">{row.obs}</StyledTableCell>
                 <StyledTableCell align="center">{row.refeicao}</StyledTableCell>
-                <StyledTableCell align="center"><Button onClick={handleOpen}>
+                <StyledTableCell align="center"><Button onClick={handleOpen}><EditIcon></EditIcon></Button>
                 <Modal
                   open={open}
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description"
                 >
-                  <Box sx={style}>         
+                  <Box sx={style}>   
+                    <Button onClick={handleClose}><CancelIcon></CancelIcon></Button>      
                       <Grid container rowSpacing={4} spacing={2} sx={{pr:5, pl:1}}>
                         
                           <Grid item xs={12} >
@@ -257,7 +259,7 @@ export default function StickyHeadTable() {
                       </Grid>
                   </Box>
               </Modal>           
-              <EditIcon></EditIcon></Button></StyledTableCell>
+              </StyledTableCell>
                 
               </StyledTableRow>
             ))}
