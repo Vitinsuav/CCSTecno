@@ -7,6 +7,7 @@ import Content from '../components/Content'
 import Header from '../components/Header';
 import { useState } from "react";
 
+
 let theme = createTheme({
   palette: {
     primary: {
@@ -159,9 +160,6 @@ export default function Paperbase() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

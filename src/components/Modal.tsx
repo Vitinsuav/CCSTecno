@@ -1,18 +1,10 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Box, Button, Container, TextField } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Modal from '@mui/material/Modal';
+import { Box, Button, TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import CloseIcon from '@mui/icons-material/Close';
 import MenuItem from '@mui/material/MenuItem';
-
+import Modal from '@mui/material/Modal';
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -32,45 +24,50 @@ const style = {
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
-  
 
-export function Modal(){
+interface NewTransactionModalProps {
+    isOpen: boolean;
+    onRequestClose : () => void;
+}
+
+
+export function CadastroModal( { isOpen , onRequestClose } : NewTransactionModalProps){
 
     return (
     <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>         
-                  <Grid container rowSpacing={4} spacing={2} sx={{pr:5, pl:1}}>
-                    <Grid item xs={12} >
+        open={isOpen}
+        onClose={onRequestClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+    >
+        <Box sx={style}>         
+            <Grid container rowSpacing={4} spacing={2} sx={{pr:5, pl:1}}>
+                <Grid item xs={12} >
                       <h1>Cadastrar ação</h1>
-                    </Grid>
-                    <Grid item xs={3}>
+                </Grid>
+                <Grid item xs={3}>
                     <TextField
-                      required
-                      id="outlined-required"
-                      label="Data"
-                      type="date"
-                      sx={{width: '100%'}}
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
+                        required
+                        id="outlined-required"
+                        label="Data"
+                        type="date"
+                        sx={{width: '100%'}}
+                    />
+                </Grid>
+                <Grid item xs={3}>
                     <TextField
-                      id="outlined-select-currency"
-                      select
-                      label="Cliente"
-                      sx={{width: '100%'}}
+                        id="outlined-select-currency"
+                        select
+                        label="Cliente"
+                        sx={{width: '100%'}}
                     >
                       
-                        <MenuItem value="Arouca">
-                          Arouca
-                        </MenuItem>                    
+                    <MenuItem value="Arouca">
+                        Arouca
+                    </MenuItem>                    
                     </TextField>
-                    </Grid>
-                    <Grid item xs={2}>
+                </Grid>
+                <Grid item xs={2}>
                     <TextField
                       required
                       id="outlined-required"
@@ -78,8 +75,8 @@ export function Modal(){
                       type="time"//tipar depois
                       sx={{width: '100%'}}
                       />
-                    </Grid>
-                    <Grid item xs={2}>
+                </Grid>
+                <Grid item xs={2}>
                     <TextField
                       required
                       id="outlined-required"
@@ -87,8 +84,8 @@ export function Modal(){
                       type="time"//tipar depois
                       sx={{width: '100%'}}
                       />
-                    </Grid>
-                    <Grid item xs={2}>
+                </Grid>
+                <Grid item xs={2}>
                     <TextField
                       required
                       id="outlined-required"
@@ -96,8 +93,8 @@ export function Modal(){
                       type="time"//tipar depois
                       sx={{width: '100%'}}
                       />
-                    </Grid>
-                    <Grid item xs={6}>
+                </Grid>
+                <Grid item xs={6}>
                     <TextField
                       id="outlined-multiline-flexible"
                       label="Observações deslocamento"
@@ -105,8 +102,8 @@ export function Modal(){
                       maxRows={2}
                       sx={{width: '100%'}}
                     />
-                    </Grid>
-                    <Grid item xs={2}>
+                </Grid>
+                <Grid item xs={2}>
                     <TextField
                       required
                       id="outlined-required"
@@ -114,8 +111,8 @@ export function Modal(){
                       type="number"//tipar depois
                       sx={{width: '100%'}}
                       />
-                    </Grid>
-                    <Grid item xs={2}>
+                </Grid>
+                <Grid item xs={2}>
                     <TextField
                       required
                       id="outlined-required"
@@ -123,8 +120,8 @@ export function Modal(){
                       type="string"//tipar depois
                       sx={{width: '100%'}}
                       />
-                    </Grid>
-                    <Grid item xs={2}>
+                </Grid>
+                <Grid item xs={2}>
                     <TextField
                       required
                       id="outlined-required"
@@ -132,8 +129,8 @@ export function Modal(){
                       type="string"//tipar depois
                       sx={{width: '100%'}}
                       />
-                    </Grid>
-                    <Grid item xs={12}>
+                </Grid>
+                <Grid item xs={12}>
                     <TextField
                       id="outlined-multiline-flexible"
                       label="Descrição"
@@ -141,14 +138,14 @@ export function Modal(){
                       maxRows={3}
                       sx={{width: '100%'}}
                     />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Button sx={{width: '100%', height: 60, backgroundColor: 'primary.light', color:'secundary.light'}}>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button sx={{width: '100%', height: 60, backgroundColor: 'primary.light', color:'secundary.light'}}>
                         Cadastrar                  
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Modal>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Box>
+    </Modal>
     )
 }
