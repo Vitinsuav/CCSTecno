@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Grid } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { api } from '../../services/api';
 
 let theme = createTheme({
   palette: {
@@ -33,10 +34,24 @@ const style = {
 interface CreateRegisterModalProps {
     isOpen: boolean;
     requestClose: () => void,
+    IdOfRegister: string;
 }
 
 
-export default function ExcluseConfirmationsModal({isOpen, requestClose} : CreateRegisterModalProps) {
+export default function ExcluseConfirmationsModal({isOpen, requestClose, IdOfRegister} : CreateRegisterModalProps) {
+
+  const Id = IdOfRegister.IdOfItem
+
+  function refresh() {
+    window.location.reload(false);
+  }
+  
+  function Exclude() { 
+    const resposta = api.delete(`Schedule/${Id}`)
+    console.log(resposta)
+    requestClose()
+    refresh()
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,7 +72,7 @@ export default function ExcluseConfirmationsModal({isOpen, requestClose} : Creat
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button sx={{backgroundColor: 'primary.light', color:'secundary.light', width: '100%'}}>
+              <Button sx={{backgroundColor: 'primary.light', color:'secundary.light', width: '100%'}} onClick={Exclude}>
                 Excluir
               </Button>
             </Grid>

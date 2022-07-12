@@ -25,7 +25,7 @@ const theme = createTheme({
 
 const Home: NextPage = () => {
 
-const [email, setEmail] = useState('')
+const [login, setLogin] = useState('')
 const [password, setPassword] = useState('')
 
 const { signIn } = useContext(AuthContext)
@@ -34,7 +34,7 @@ async function handleSubmit(event: FormEvent){
   event.preventDefault();
 
   const data = {
-    email, 
+    login, 
     password,
   }
   await signIn(data)
@@ -65,9 +65,9 @@ async function handleSubmit(event: FormEvent){
             label="E-mail"
             name="email"
             autoComplete="email"
-            value={email}
+            value={login}
             autoFocus
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => setLogin(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -99,11 +99,11 @@ async function handleSubmit(event: FormEvent){
 
 export default Home
 
-export const getServerSideProps = withSSRGuest(async (ctx) => { //context
+//export const getServerSideProps = withSSRGuest(async (ctx) => { //context
   
-  return {
-    props: {
+  //return {
+    //props: {
       
-    }
-  }
-})
+    //}
+  //}
+//})

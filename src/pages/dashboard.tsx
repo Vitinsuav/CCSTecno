@@ -171,17 +171,17 @@ export default function Paperbase() {
 }
 
 
-export const getServerSideProps = withSSRAuth(async(ctx) => {
-  const apiClient = setupAPIClient(ctx)   
-  const response = await apiClient.get('/me') 
+//export const getServerSideProps = withSSRAuth(async(ctx) => {
+  //const apiClient = setupAPIClient(ctx)   
+  //const response = await apiClient.get('/me') 
 
-  return {
-      props: {
+  //return {
+      //props: {
 
-      }
-  }
-}, {
-  permissions: ['metrics.list'],
-  roles: ['administrator']
-})
+     // }
+  //}
+//}, {
+ // permissions: ['metrics.list'],
+ // roles: ['administrator']
+//})
 

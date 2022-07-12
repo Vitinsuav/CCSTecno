@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 
 const ITEM_HEIGHT = 48;
 
-export default function ContextMenu() {
+export default function ContextMenu( IdOfItem ) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -76,14 +76,14 @@ export default function ContextMenu() {
               <Grid item xs={6}><EditIcon/></Grid>
             </Grid>       
           </MenuItem>
-          <MenuItem onClick={handleOpenEditRegisterModal}>
+          <MenuItem onClick={handleOpenExcluseModal}>
             <Grid container spacing={12}>
               <Grid item xs={6}>Excluir</Grid>
               <Grid item xs={6}><DeleteIcon/></Grid>
             </Grid> 
           </MenuItem>
         </Menu>
-    <ExcluseConfirmationsModal isOpen={excluseModalOpen} requestClose={handleCloseExcluseModal}></ExcluseConfirmationsModal>
+    <ExcluseConfirmationsModal IdOfRegister={IdOfItem} isOpen={excluseModalOpen} requestClose={handleCloseExcluseModal}></ExcluseConfirmationsModal>
     <EditRegisterModal isOpen={editRegisterModalOpen} requestClose={handleCloseEditRegisterModal}></EditRegisterModal>
   </Box>
   

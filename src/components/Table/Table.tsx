@@ -9,6 +9,8 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper'
 import ContextMenu from './ContextMenu';
+import { useEffect, useState } from 'react';
+import { api } from '../../services/api';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -51,28 +53,15 @@ function createData(
   return { name, data, entrada, intervalo, saida, total, deslocamento, pedagio, obs, refeicao };
 }
 
-const rows = [
-    createData('Arouca', '23/06/2022', '08:30', '01:00', '16:30', '07:00', 100, '4,80', 'Atibaia > Campinas','25,00'),
-    createData('Lux', '24/06/2022', '09:00', '01:00', '12:30','07:00', 100,'4,80','Atibaia > Campinas','25,00'),
-    createData('KR', '25/06/2022', '8:00', '01:00', '17:45','07:00',100,'4,80','Atibaia > Campinas','25,00'),
-    createData('Ática', '26/06/2022', '07:55', '01:00', '17:30','07:00', 100,'4,80','Atibaia > Campinas','25,00'),
-    createData('TecnoLock', '27/06/2022', '08:30', '01:00', '15:30','07:00', 100,'4,80','Atibaia > Campinas', '25,00'),
-    createData('TecnoLock', '27/06/2022', '08:30', '01:00', '15:30','07:00', 100,'4,80','Atibaia > Campinas', '25,00'),
-];
-
 export default function StickyHeadTable() {
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [ response, setResponse ] = useState([])
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+  useEffect(() => {
+    api.get('Schedule/0/07_2022').then(response => setResponse(response.data)).catch(e => console.log(e))
+  }, [])
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const registros = response
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -96,37 +85,29 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((row) => (
-              <StyledTableRow key={row.name}>
+          {registros
+          .map((registro) => (
+              <StyledTableRow key={registro.aptemp_in_codigo}>
                 <StyledTableCell component="th" scope="row">
-                  {row.data}
+                  {registro.apt_dt_data}
                 </StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 20 }}>{row.name}</StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 20 }}>{row.entrada}</StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 20 }}>{row.intervalo}</StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 20 }}>{row.saida}</StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 20 }}>{row.total}</StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 200}}>Implantação 1<br></br>Implantação 2<br></br>Implantação 3</StyledTableCell>
-                <StyledTableCell align="center">{row.deslocamento}</StyledTableCell>
-                <StyledTableCell align="center">{row.pedagio}</StyledTableCell>
-                <StyledTableCell align="center">{row.obs}</StyledTableCell>
-                <StyledTableCell align="center">{row.refeicao}</StyledTableCell>
-                <StyledTableCell align="center"><ContextMenu></ContextMenu></StyledTableCell>           
+                <StyledTableCell align="center" style={{ width: 20 }}>{registro.aptemp_st_empresa}</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_entrada}</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_intervalo}</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_saida}</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_diferenca}</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: 200}}>{registro.apt_st_atividade}</StyledTableCell>
+                <StyledTableCell align="center">{registro.apt_re_kmrodado}</StyledTableCell>
+                <StyledTableCell align="center">{registro.apt_re_pedagio}</StyledTableCell>
+                <StyledTableCell align="center">{registro.apt_st_origem_destino}</StyledTableCell>
+                <StyledTableCell align="center">{registro.apt_st_refeicao}</StyledTableCell>
+                <StyledTableCell align="center"><ContextMenu IdOfItem={registro.apt_in_codigo}></ContextMenu></StyledTableCell>           
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[2, 3, 4]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      
     </Paper>
   );
 }

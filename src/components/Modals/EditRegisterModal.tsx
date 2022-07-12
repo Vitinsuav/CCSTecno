@@ -4,13 +4,15 @@ import { Box, Button, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { api } from '../../services/api';
+import { useEffect, useState } from 'react';
 
 const Modalstyle = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 800,
+    width: 875,
     height: 500,
     bgcolor: 'background.paper',
     boxShadow: 24,
@@ -24,6 +26,15 @@ interface EditRegisterModalProps {
 
 
 export default function EditRegisterModal({isOpen, requestClose} : EditRegisterModalProps){
+    
+    const [ response, setResponse ] = useState([])
+
+    useEffect(() => {
+     api.get('Schedule/Companies').then(response => setResponse(response.data)).catch(e => console.log(e))
+    }, [])
+
+  
+    const empresas = response
 
 return (
     <Modal
@@ -65,9 +76,11 @@ return (
                             sx={{width: '100%'}}
                         >
                                 
-                        <MenuItem value="Arouca">
-                            Arouca
-                        </MenuItem>                    
+                        {empresas.map((empresa) => (         
+                        <MenuItem value={empresa.aptemp_st_empresa}>
+                        {empresa.aptemp_st_empresa}
+                        </MenuItem>  
+                        ))}                 
                     </TextField>
                 </Grid>
                 <Grid item xs={2}>
