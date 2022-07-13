@@ -26,7 +26,7 @@ interface CreateRegisterModalProps {
 
 
 export default function CreateRegisterModal({isOpen, requestClose} : CreateRegisterModalProps){
-    const [Data, setData] = useState()
+    const [InputData, setInputData] = useState(new Date())
     const [Empresa, setEmpresa] = useState()
     const [Entrada, setEntrada] = useState()
     const [Intervalo, setIntervalo] = useState()
@@ -46,6 +46,10 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
     
     const empresas = response
 
+    let DataSemForma = new Date(InputData)
+    const Data = ((DataSemForma.getDate() + 1)) + "/" + ((DataSemForma.getMonth() + 1)) + "/" + DataSemForma.getFullYear(); 
+    console.log(Data);
+
     async function handleSubmit(event: FormEvent){
         event.preventDefault();
         Post();
@@ -53,11 +57,9 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
     }
 
     function Post () {
-         
-        //Com os dados do form/não funciona
 
         const resposta = api.post('/Schedule', 
-           {
+            {
             Data,
             Empresa,
             Entrada,
@@ -73,42 +75,6 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
         console.log(resposta)
     }
   
-    //Com os dados digitados/nao funciona tbm
-
-    function Post1(){
-
-    const Data1 = "30/07/2022"
-    const Empresa1 = 3
-    const Entrada1 = "08:00:00"
-    const Intervalo1 = "01:00:00"
-    const Saida1 = "17:30:00"
-    const Atividade1 = "Implementação 1"
-    const KmRodado1 = 120.5
-    const Pedagio1 = 200
-    const OrigemDestino1 = "Atibaia > Mairipora"
-    const Refeicao1 = 25.99
-        
-    const resposta1 = api.post('/Schedule', 
-        {
-        Data1,
-        Empresa1,
-        Entrada1,
-        Intervalo1,
-        Saida1,
-        Atividade1,
-        KmRodado1,
-        Pedagio1,
-        OrigemDestino1,
-        Refeicao1
-        })
-          
-          
-        console.log(resposta1)
-    }
-
-          
-
-
     
 return (
     <Modal
@@ -116,7 +82,7 @@ return (
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
     >                 
-        <Box sx={Modalstyle} component="form">   
+        <Box sx={Modalstyle} component="form" onSubmit={handleSubmit}>   
                   
                 <Grid container rowSpacing={4} spacing={2} sx={{pr:5, pl:1, pt:1}}>
                     <Grid item xs={4} >
@@ -140,8 +106,8 @@ return (
                             id="outlined-required"
                             label="Data"
                             type="date"
-                            value={Data}
-                            onChange={e => setData(e.target.value)}
+                            value={InputData}
+                            onChange={e => setInputData(e.target.value)}
                             sx={{width: '100%'}}
                         />
                     </Grid>
@@ -154,7 +120,7 @@ return (
                             sx={{width: '100%'}}
                         >
                        {empresas.map((empresa) => (         
-                        <MenuItem value="1"
+                        <MenuItem value={empresa.aptemp_in_codigo}
                         >
                             {empresa.aptemp_st_empresa}
                         </MenuItem>  
@@ -250,7 +216,7 @@ return (
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secundary.light'}} onClick={Post1}>
+                    <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secundary.light'}}>
                         Cadastrar                  
                     </Button>
                 </Grid>

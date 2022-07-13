@@ -76,15 +76,16 @@ export default function ContextMenu( IdOfItem ) {
               <Grid item xs={6}><EditIcon/></Grid>
             </Grid>       
           </MenuItem>
-          <MenuItem onClick={handleOpenExcluseModal}>
+          <MenuItem onClick={handleOpenEditRegisterModal}>
             <Grid container spacing={12}>
               <Grid item xs={6}>Excluir</Grid>
               <Grid item xs={6}><DeleteIcon/></Grid>
             </Grid> 
           </MenuItem>
         </Menu>
+    
+    <EditRegisterModal IdOfRegister={IdOfItem} isOpen={editRegisterModalOpen} requestClose={handleCloseEditRegisterModal}></EditRegisterModal>
     <ExcluseConfirmationsModal IdOfRegister={IdOfItem} isOpen={excluseModalOpen} requestClose={handleCloseExcluseModal}></ExcluseConfirmationsModal>
-    <EditRegisterModal isOpen={editRegisterModalOpen} requestClose={handleCloseEditRegisterModal}></EditRegisterModal>
   </Box>
   
   );

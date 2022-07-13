@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { api } from '../../services/api';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 const Modalstyle = {
     position: 'absolute' as 'absolute',
@@ -22,11 +22,11 @@ const Modalstyle = {
 interface EditRegisterModalProps {
     isOpen: boolean;
     requestClose: () => void,
+    IdOfRegister: string;
 }
 
 
-export default function EditRegisterModal({isOpen, requestClose} : EditRegisterModalProps){
-    
+export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} : EditRegisterModalProps){
     const [ response, setResponse ] = useState([])
 
     useEffect(() => {
@@ -42,7 +42,7 @@ return (
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
     >                 
-        <Box sx={Modalstyle}>      
+        <Box sx={Modalstyle} component="form">      
                 <Grid container rowSpacing={4} spacing={2} sx={{pr:5, pl:1, pt:1}}>
                     <Grid item xs={4} >
                         <h1>Editar cadastro</h1>
@@ -72,7 +72,6 @@ return (
                         <TextField
                             id="outlined-select-currency"
                             select
-                            label="Cliente"
                             sx={{width: '100%'}}
                         >
                                 
@@ -156,7 +155,7 @@ return (
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <Button sx={{width: '100%', height: 60, backgroundColor: 'primary.light', color:'secundary.light'}}>
+                    <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'primary.light', color:'secundary.light'}}>
                        Editar                  
                     </Button>
                 </Grid>

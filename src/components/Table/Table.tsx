@@ -38,20 +38,6 @@ interface Data {
     refeicao: string,
 }
 
-function createData(
-  name: string,
-  data: string,
-  entrada: string,
-  intervalo: string,
-  saida: string,
-  total: string,
-  deslocamento: number,
-  pedagio: string,
-  obs: string,
-  refeicao: string,
-): Data {
-  return { name, data, entrada, intervalo, saida, total, deslocamento, pedagio, obs, refeicao };
-}
 
 export default function StickyHeadTable() {
 
@@ -88,8 +74,8 @@ export default function StickyHeadTable() {
           {registros
           .map((registro) => (
               <StyledTableRow key={registro.aptemp_in_codigo}>
-                <StyledTableCell component="th" scope="row">
-                  {registro.apt_dt_data}
+                <StyledTableCell component="th" scope="row" >
+                  {registro.apt_dt_data.split("T00:00:00.0000000-03:00")}
                 </StyledTableCell>
                 <StyledTableCell align="center" style={{ width: 20 }}>{registro.aptemp_st_empresa}</StyledTableCell>
                 <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_entrada}</StyledTableCell>

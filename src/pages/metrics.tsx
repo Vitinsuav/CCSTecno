@@ -12,70 +12,75 @@ import { Box, Button, TextField } from '@mui/material';
 export default function Dashboard() {
     const { user, isAuthenticated } = useContext(AuthContext)
     
-    function Post () {
-      const Data = "25/07/2022"
-      const Empresa = "3"
-      const Entrada = "08:00:00"
-      const Intervalo = "01:00:00"
-      const Saida = "17:30:00"
-      const Atividade = "Implementação 1"
-      const KmRodado = "120.5"
-      const Pedagio = "200"
-      const OrigemDestino = "Atibaia > Campinas"
-      const Refeicao = "25.99"
+     function Post () {
+       const Data = "25-07-2022"
+       const Empresa = "3"
+       const Entrada = "08:00"
+       const Intervalo = "01:00"
+       const Saida = "17:30"
+       const Atividade = "Implementação 1"
+       const KmRodado = "120.5"
+       const Pedagio = "200"
+       const OrigemDestino = "Atibaia > Campinas"
+       const Refeicao = "25.99"
 
-      const resposta = api.post('/Schedule', 
-      {
-        Data,
-        Empresa,
-        Entrada,
-        Intervalo,
-        Saida,
-        Atividade,
-        KmRodado,
-        Pedagio,
-        OrigemDestino,
-        Refeicao
-      })
-    }
+       const resposta = api.post('/Schedule', 
+       {
+         Data,
+         Empresa,
+         Entrada,
+         Intervalo,
+         Saida,
+         Atividade,
+         KmRodado,
+         Pedagio,
+         OrigemDestino,
+         Refeicao
+       })
 
-      function PostPost(){
+       console.log(resposta)
+     }
 
-        const Data1 = "30/07/2022"
-        const Empresa1 = "3"
-        const Entrada1 = "08:00:00"
-        const Intervalo1 = "01:00:00"
-        const Saida1 = "17:30:00"
-        const Atividade1 = "Implementação 1"
-        const KmRodado1 = "120.5"
-        const Pedagio1 = "200"
-        const OrigemDestino1 = "Atibaia > Mairipora"
-        const Refeicao1 = "25.99"
-            
-        const resposta1 = api.post('/Schedule', 
-            {
-            Data1,
-            Empresa1,
-            Entrada1,
-            Intervalo1,
-            Saida1,
-            Atividade1,
-            KmRodado1,
-            Pedagio1,
-            OrigemDestino1,
-            Refeicao1
-            })
-              
-              
-          console.log(resposta1)
-        }
-    
+    // function Post () {
+    //   const Data = "25/07/2022"
+    //   const Empresa = "3"
+    //   const Entrada = "08:00:00"
+    //   const Intervalo = "01:00:00"
+    //   const Saida = "17:30:00"
+    //   const Atividade = "Implementação 1"
+    //   const KmRodado = "120.5"
+    //   const Pedagio = "200"
+    //   const OrigemDestino = "Atibaia > Campinas"
+    //   const Refeicao = "25.99"
+
+    //   const resposta = api.post('/Schedule', 
+    //   {
+    //     Data,
+    //     Empresa,
+    //     Entrada,
+    //     Intervalo,
+    //     Saida,
+    //     Atividade,
+    //     KmRodado,
+    //     Pedagio,
+    //     OrigemDestino,
+    //     Refeicao
+    //   })
+
+    //   console.log(resposta)
+    // }
+
+          
+
+    let data = new Date();
+    let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear(); 
+    console.log(dataFormatada);
       
     
 
     return(
         <>
-          <Button sx={{backgroundColor: "primary.dark"}} onClick={PostPost}></Button>
+          <Button sx={{backgroundColor: "primary.dark"}} onClick={Post}></Button>
             <h1> Dashboard:  </h1>
 
             <Can permissions={['metrics.list']}>
