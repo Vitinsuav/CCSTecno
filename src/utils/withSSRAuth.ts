@@ -24,32 +24,11 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>, options?:WithSSRAuthOp
         }
     }
 
-    if(options){
-      const user = decode<{permissions: string[], roles: string[]}>(token)
-      const { permissions, roles } = options 
-
-      const userHasValidPermissions = validateUserPermissions({ 
-        user, permissions, roles
-      })
-
-      if(!userHasValidPermissions){
-        return {
-          redirect: {
-            destination: '/dashboard',
-            permanent: false
-          }
-        }
-      }
-    }
-
-   
-
     try{ 
       return await fn(ctx)
     } catch(e){
         if(e instanceof AuthTokenError){
           destroyCookie(ctx, 'nextauth.token')
-          destroyCookie(ctx, 'nextauth.refreshToken')
           // tratativa de erros no server ou backend
           return {
             redirect:{

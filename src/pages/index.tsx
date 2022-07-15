@@ -99,11 +99,11 @@ async function handleSubmit(event: FormEvent){
 
 export default Home
 
-//export const getServerSideProps = withSSRGuest(async (ctx) => { //context
+export const getServerSideProps = withSSRGuest(async (ctx) => { //context
   
-  //return {
-    //props: {
+  return {
+    props: {
       
-    //}
-  //}
-//})
+  }
+  }
+})

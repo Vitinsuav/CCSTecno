@@ -23,6 +23,7 @@ export default function ContextMenu( IdOfItem ) {
   };
 
   const [editRegisterModalOpen, setEditRegisterModalOpen] = React.useState(false);
+
   const handleOpenEditRegisterModal = () => {
     setEditRegisterModalOpen(true);
     handleClose();
@@ -76,6 +77,7 @@ export default function ContextMenu( IdOfItem ) {
               <Grid item xs={6}><EditIcon/></Grid>
             </Grid>       
           </MenuItem>
+          
           <MenuItem onClick={handleOpenEditRegisterModal}>
             <Grid container spacing={12}>
               <Grid item xs={6}>Excluir</Grid>
@@ -90,3 +92,4 @@ export default function ContextMenu( IdOfItem ) {
   
   );
 }
+

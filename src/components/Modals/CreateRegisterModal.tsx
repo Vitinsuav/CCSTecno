@@ -48,17 +48,23 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
 
     let DataSemForma = new Date(InputData)
     const Data = ((DataSemForma.getDate() + 1)) + "/" + ((DataSemForma.getMonth() + 1)) + "/" + DataSemForma.getFullYear(); 
-    console.log(Data);
+    
+
+    function refresh() {
+        window.location.reload(false);
+    }
 
     async function handleSubmit(event: FormEvent){
         event.preventDefault();
         Post();
+        requestClose()
+        refresh()
 
     }
 
     function Post () {
 
-        const resposta = api.post('/Schedule', 
+        api.post('/Schedule', 
             {
             Data,
             Empresa,
@@ -72,7 +78,6 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
             Refeicao
          })
       
-        console.log(resposta)
     }
   
     
