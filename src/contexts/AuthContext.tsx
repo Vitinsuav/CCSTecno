@@ -26,7 +26,7 @@ type User = {
 
 export const AuthContext = createContext({} as AuthContextData)
 
-export function AuthProvider({ children }){
+export function AuthProvider({ children } : AuthProviderProps){
 
     const [user, setUser] = useState<User>();
 

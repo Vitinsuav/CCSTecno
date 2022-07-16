@@ -149,7 +149,7 @@ theme = {
 };
 
 
-export default function Paperbase() {
+export default function Dashboard() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 

@@ -17,7 +17,7 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Avatar from '@mui/material/Avatar';
 
-import { mainListItems, secondaryListItems } from './ListItems';
+import { mainListItems } from './ListItems';
 import RegistersTable from '../Table/Table';
 import CreateRegisterModal from '../Modals/CreateRegisterModal';
 
@@ -79,8 +79,8 @@ let theme = createTheme({
       contrastText: '#ffffff'
       
     },
-    secundary: {
-      light: '#fff',
+    secondary: {
+      main: '#fff',
     }, 
     success: {
       main:'#079b65', 
@@ -136,7 +136,7 @@ function DashboardContent() {
             >
               Agendas
             </Typography>
-            <Button onClick={handleOpenRegisterModal} variant="contained" sx={{ mr: 1, color: 'secundary.light', backgroundColor: 'primary.light', borderRadius: '40px' }}>
+            <Button onClick={handleOpenRegisterModal} variant="contained" sx={{ mr: 1, color: 'secondary.main', backgroundColor: 'primary.light', borderRadius: '40px' }}>
                 <AddIcon/> Novo cadastro
             </Button>
             <CreateRegisterModal isOpen={createRegisterModalOpen} requestClose={handleCloseRegisterModal}></CreateRegisterModal>
@@ -162,7 +162,6 @@ function DashboardContent() {
           <List component="nav">
             {mainListItems}
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
           </List>
         </Drawer>
         <Box
@@ -178,7 +177,7 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth='600' sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth='600px' sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>           
                 <RegistersTable></RegistersTable>              

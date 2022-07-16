@@ -3,7 +3,6 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
@@ -11,6 +10,7 @@ import Paper from '@mui/material/Paper'
 import ContextMenu from './ContextMenu';
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
+import { UrlWithStringQuery } from 'url';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -25,25 +25,35 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     
 }));
-interface Data {
-    name: string,
-    data: string,
-    entrada: string,
-    intervalo: string,
-    saida: string,
-    total: string,
-    deslocamento: number,
-    pedagio: string,
-    obs: string,
-    refeicao: string,
-}
+interface Data 
+  {
+    aptemp_in_codigo: number,
+    apt_dt_data: string,
+    aptemp_st_empresa: string,
+    apt_st_entrada: string,
+    apt_st_intervalo: string,
+    apt_st_saida: string,
+    apt_st_diferenca:string,
+    apt_st_atividade:string,
+    apt_re_kmrodado: string,
+    apt_re_pedagio: string,
+    apt_st_origem_destino: string,
+    apt_st_refeicao: string,
+    apt_in_codigo: string,
+  }
+
+  type ArrayDasEmpresas = Array<Data>
+    
+
 
 export default function RegistersTable() {
 
-  const [ registros, setRegistros ] = useState([])
+  const [ registros, setRegistros ] = useState<ArrayDasEmpresas>([])
 
- 
+ useEffect(() => {
   api.get('Schedule/0/07_2022').then(response => setRegistros(response.data)).catch(e => console.log(e))
+  }, [])
+  
   
 
   return (

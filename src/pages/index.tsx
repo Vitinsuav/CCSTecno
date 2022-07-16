@@ -10,7 +10,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { parseCookies } from 'nookies'
-import { withSSRGuest } from '../utils/withSSRGuest';
 
 const theme = createTheme({
   palette: {
@@ -98,12 +97,3 @@ async function handleSubmit(event: FormEvent){
 }
 
 export default Home
-
-export const getServerSideProps = withSSRGuest(async (ctx) => { //context
-  
-  return {
-    props: {
-      
-  }
-  }
-})

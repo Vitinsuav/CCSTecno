@@ -24,23 +24,31 @@ interface CreateRegisterModalProps {
     requestClose: () => void,
 }
 
+interface RetornoDasEmpresas{
+    aptemp_in_codigo: number,
+    aptemp_st_empresa: string, 
+
+}
+
+type ArrayDasEmpresas = Array<RetornoDasEmpresas>
+
 
 export default function CreateRegisterModal({isOpen, requestClose} : CreateRegisterModalProps){
-    const [InputData, setInputData] = useState(new Date())
-    const [Empresa, setEmpresa] = useState()
-    const [Entrada, setEntrada] = useState()
-    const [Intervalo, setIntervalo] = useState()
-    const [Saida, setSaida] = useState()
-    const [Atividade, setAtividade] = useState()  
-    const [KmRodado, setKmRodado] = useState()
-    const [Pedagio, setPedagio] = useState()
-    const [OrigemDestino, setOrigemDestino] = useState()
-    const [Refeicao, setRefeicao] = useState()
+    const [InputData, setInputData] = useState('')
+    const [Empresa, setEmpresa] = useState('')
+    const [Entrada, setEntrada] = useState('')
+    const [Intervalo, setIntervalo] = useState('')
+    const [Saida, setSaida] = useState('')
+    const [Atividade, setAtividade] = useState('')  
+    const [KmRodado, setKmRodado] = useState('')
+    const [Pedagio, setPedagio] = useState('')
+    const [OrigemDestino, setOrigemDestino] = useState('')
+    const [Refeicao, setRefeicao] = useState('')
     
-    const [ retornoDasEmpresas, setRetornoDasEmpresas ] = useState([])
+    const [ retornoDasEmpresas, setRetornoDasEmpresas ] = useState<ArrayDasEmpresas>([])
 
     function refresh() {
-        window.location.reload(false);
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -121,7 +129,7 @@ return (
                             onChange={e => setEmpresa(e.target.value)}
                             sx={{width: '100%'}}
                         >
-                       {retornoDasEmpresas.map((empresa) => (         
+                       {retornoDasEmpresas.map((empresa : RetornoDasEmpresas) => (         
                         <MenuItem value={empresa.aptemp_in_codigo}
                         >
                             {empresa.aptemp_st_empresa}
@@ -218,7 +226,7 @@ return (
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secundary.light'}}>
+                    <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secondary.main'}}>
                         Cadastrar                  
                     </Button>
                 </Grid>

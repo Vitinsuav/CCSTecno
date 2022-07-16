@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { api } from '../../services/api';
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 const Modalstyle = {
     position: 'absolute' as 'absolute',
@@ -22,28 +22,52 @@ const Modalstyle = {
 interface EditRegisterModalProps {
     isOpen: boolean;
     requestClose: () => void,
-    IdOfRegister: string;
+    IdOfRegister: {
+        IdOfItem: string;
+    },
 }
 
+interface RetornoDoLancamento {
+    aptemp_in_codigo: number,
+    apt_dt_data: Date,
+    aptemp_st_empresa: string,
+    apt_st_entrada: string,
+    apt_st_intervalo: string,
+    apt_st_saida: string,
+    apt_st_diferenca:string,
+    apt_st_atividade:string,
+    apt_re_kmrodado: string,
+    apt_re_pedagio: string,
+    apt_st_origem_destino: string,
+    apt_st_refeicao: string,
+    apt_in_codigo: string,
+}
+
+interface RetornoDasEmpresas {
+    aptemp_in_codigo: number,
+    aptemp_st_empresa: string, 
+}
+
+type ArrayDasEmpresas = Array<RetornoDasEmpresas>
 
 export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} : EditRegisterModalProps){
     
     const Id = IdOfRegister.IdOfItem
-    const [ retornoDasEmpresas , setRetornoDasEmpresas ] = useState([])
+    const [ retornoDasEmpresas , setRetornoDasEmpresas ] = useState<ArrayDasEmpresas>([])
 
-    const [InputData, setInputData] = useState(new Date()) 
-    const [Empresa, setEmpresa] = useState()
-    const [Entrada, setEntrada] = useState()
-    const [Intervalo, setIntervalo] = useState()
-    const [Saida, setSaida] = useState()
-    const [Atividade, setAtividade] = useState()  
-    const [KmRodado, setKmRodado] = useState()
-    const [Pedagio, setPedagio] = useState()
-    const [OrigemDestino, setOrigemDestino] = useState()
-    const [Refeicao, setRefeicao] = useState()  
+    const [InputData, setInputData] = useState('') 
+    const [Empresa, setEmpresa] = useState('')
+    const [Entrada, setEntrada] = useState('')
+    const [Intervalo, setIntervalo] = useState('')
+    const [Saida, setSaida] = useState('')
+    const [Atividade, setAtividade] = useState('')  
+    const [KmRodado, setKmRodado] = useState('')
+    const [Pedagio, setPedagio] = useState('')
+    const [OrigemDestino, setOrigemDestino] = useState('')
+    const [Refeicao, setRefeicao] = useState('')  
     
     function refresh() {
-        window.location.reload(false);
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -79,17 +103,7 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
 
     }
 
-    const [ retornoDoLancamento, setRetornoDoLancamento ] = useState([])
-    
-    // useEffect(()=> {
-    //     loadData()
-    // }, [])
-
-    // async function loadData(){
-    //     const chamada = await api.get(`Schedule/${Id}/07_2022`)
-    //     console.log(chamada.data)
-       
-    // }
+    const [ retornoDoLancamento, setRetornoDoLancamento ] = useState<RetornoDoLancamento>({})
      const recuperaDados = async() => {
         
      const response = await api.get(`Schedule/${Id}/07_2022`).then(response => setRetornoDoLancamento(response.data)).catch(e => console.log(e))
@@ -108,7 +122,15 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
         setSaida(retornoDoLancamento.apt_st_saida)
     }, [])
 
-    console.log(retornoDoLancamento)
+      // useEffect(()=> {
+    //     loadData()
+    // }, [])
+
+    // async function loadData(){
+    //     const chamada = await api.get(`Schedule/${Id}/07_2022`)
+    //     console.log(chamada.data)
+       
+    // }
          
     return (
         <Modal
@@ -250,7 +272,7 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secundary.light'}}>
+                        <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secondary.main'}}>
                             Editar                 
                         </Button>
                     </Grid>

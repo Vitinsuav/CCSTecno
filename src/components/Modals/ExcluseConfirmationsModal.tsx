@@ -14,8 +14,8 @@ let theme = createTheme({
       main: '#ddbf13',
       dark: '#1E90FF',
     },
-    secundary: {
-      light: '#fff',
+    secondary: {
+      main:'#fff',
     }
   }})
 
@@ -34,7 +34,9 @@ const style = {
 interface CreateRegisterModalProps {
     isOpen: boolean;
     requestClose: () => void,
-    IdOfRegister: string;
+    IdOfRegister: {
+      IdOfItem: string;
+  },
 }
 
 
@@ -43,7 +45,7 @@ export default function ExcluseConfirmationsModal({isOpen, requestClose, IdOfReg
   const Id = IdOfRegister.IdOfItem
 
   function refresh() {
-    window.location.reload(false);
+    window.location.reload();
   }
   
   function Exclude() { 
@@ -67,12 +69,12 @@ export default function ExcluseConfirmationsModal({isOpen, requestClose, IdOfReg
           </Typography>
           <Grid sx={{pt: 4}} container spacing={2}>
             <Grid item xs={6}>
-              <Button onClick={requestClose} sx={{backgroundColor: 'primary.main', color:'secundary.light', width: '100%'}}>
+              <Button onClick={requestClose} sx={{backgroundColor: 'primary.main', color:'secondary.main', width: '100%'}}>
                 Cancelar
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button sx={{backgroundColor: 'primary.light', color:'secundary.light', width: '100%'}} onClick={Exclude}>
+              <Button sx={{backgroundColor: 'primary.light', color:'secondary.main', width: '100%'}} onClick={Exclude}>
                 Excluir
               </Button>
             </Grid>
