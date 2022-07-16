@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Avatar from '@mui/material/Avatar';
 
 import { mainListItems, secondaryListItems } from './ListItems';
-import StickyHeadTable from '../Table/Table';
+import RegistersTable from '../Table/Table';
 import CreateRegisterModal from '../Modals/CreateRegisterModal';
 
 const drawerWidth: number = 240;
@@ -181,7 +181,7 @@ function DashboardContent() {
           <Container maxWidth='600' sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>           
-                <StickyHeadTable></StickyHeadTable>              
+                <RegistersTable></RegistersTable>              
               </Grid>
             </Grid>
           </Container>

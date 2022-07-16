@@ -37,30 +37,18 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
     const [OrigemDestino, setOrigemDestino] = useState()
     const [Refeicao, setRefeicao] = useState()
     
-    const [ response, setResponse ] = useState([])
-
-      useEffect(() => {
-       api.get('Schedule/Companies').then(response => setResponse(response.data)).catch(e => console.log(e))
-      }, [])
-
-    
-    const empresas = response
-
-    let DataSemForma = new Date(InputData)
-    const Data = ((DataSemForma.getDate() + 1)) + "/" + ((DataSemForma.getMonth() + 1)) + "/" + DataSemForma.getFullYear(); 
-    
+    const [ retornoDasEmpresas, setRetornoDasEmpresas ] = useState([])
 
     function refresh() {
         window.location.reload(false);
     }
 
-    async function handleSubmit(event: FormEvent){
-        event.preventDefault();
-        Post();
-        requestClose()
-        refresh()
+    useEffect(() => {
+       api.get('Schedule/Companies').then(response => setRetornoDasEmpresas(response.data)).catch(e => console.log(e))
+    }, [])
 
-    }
+    let DataSemForma = new Date(InputData)
+    const Data = ((DataSemForma.getDate() + 1)) + "/" + ((DataSemForma.getMonth() + 1)) + "/" + DataSemForma.getFullYear(); 
 
     function Post () {
 
@@ -79,6 +67,15 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
          })
       
     }
+
+    async function handleSubmit(event: FormEvent){
+        event.preventDefault();
+        Post();
+        requestClose()
+        refresh()
+    }
+
+  
   
     
 return (
@@ -124,7 +121,7 @@ return (
                             onChange={e => setEmpresa(e.target.value)}
                             sx={{width: '100%'}}
                         >
-                       {empresas.map((empresa) => (         
+                       {retornoDasEmpresas.map((empresa) => (         
                         <MenuItem value={empresa.aptemp_in_codigo}
                         >
                             {empresa.aptemp_st_empresa}

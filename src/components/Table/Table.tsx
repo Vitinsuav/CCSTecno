@@ -38,13 +38,13 @@ interface Data {
     refeicao: string,
 }
 
-export default function StickyHeadTable() {
+export default function RegistersTable() {
 
   const [ registros, setRegistros ] = useState([])
 
-  useEffect(() => {
-    api.get('Schedule/0/07_2022').then(response => setRegistros(response.data)).catch(e => console.log(e))
-  }, [])
+ 
+  api.get('Schedule/0/07_2022').then(response => setRegistros(response.data)).catch(e => console.log(e))
+  
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>

@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Content from '../components/Header/ContentHeader'
-import Header from '../components/Header/Header';
-import { setupAPIClient } from '../services/api';
-import { withSSRAuth } from '../utils/withSSRAuth';
 
 
 let theme = createTheme({

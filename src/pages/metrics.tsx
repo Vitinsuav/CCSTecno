@@ -8,6 +8,7 @@ import { api } from '../services/api';
 import { withSSRAuth } from "../utils/withSSRAuth"
 import { Box, Button, TextField } from '@mui/material';
 
+//api.get('Schedule/0/07_2022').then(response => setRegistros(response.data)).catch(e => console.log(e))
 
 export default function Dashboard() {
     const { user, isAuthenticated } = useContext(AuthContext)
