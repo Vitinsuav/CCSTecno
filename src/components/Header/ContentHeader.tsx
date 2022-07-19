@@ -175,15 +175,16 @@ function DashboardContent() {
             height: '100vh',
             overflow: 'auto',
           }}
-        >
+        > 
           <Toolbar />
-          <Container maxWidth='600px' sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
+       
+        
+            <Grid style={{marginTop: '30px', marginLeft:'20px', width:'87%'  }} container spacing={0}>
               <Grid item xs={12}>           
                 <RegistersTable></RegistersTable>              
               </Grid>
             </Grid>
-          </Container>
+      
         </Box>
       </Box>
     </ThemeProvider>

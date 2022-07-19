@@ -11,6 +11,7 @@ import ContextMenu from './ContextMenu';
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 import { UrlWithStringQuery } from 'url';
+import { Box } from '@mui/system';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -48,16 +49,28 @@ interface Data
 
 export default function RegistersTable() {
 
-  const [ registros, setRegistros ] = useState<ArrayDasEmpresas>([])
+  const [ registros, setRegistros ] = useState<ArrayDasEmpresas>([]);
+  const [isloading, setIsloading] = useState(true);
 
  useEffect(() => {
-  api.get('Schedule/0/07_2022').then(response => setRegistros(response.data)).catch(e => console.log(e))
-  }, [])
+  async function carregaDados(){
+    try{
+    await api.get('Schedule/0/07_2022').then(response => setRegistros(response.data)).catch(e => console.log(e));
+    }catch(e){
+      console.log(e);
+    }finally{
+      setIsloading(false);
+    }
+  }
+  carregaDados();
+  }, []);
   
   
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+   <div>
+    {isloading ? <div></div> : 
+    <Paper sx={{ width: '110%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 465 , alignItems: 'center' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -102,5 +115,7 @@ export default function RegistersTable() {
       </TableContainer>
       
     </Paper>
+          }
+    </div>
   );
 }

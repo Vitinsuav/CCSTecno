@@ -40,15 +40,20 @@ interface CreateRegisterModalProps {
 }
 
 
+
+
 export default function ExcluseConfirmationsModal({isOpen, requestClose, IdOfRegister} : CreateRegisterModalProps) {
 
-  const Id = IdOfRegister.IdOfItem
+  const Id = IdOfRegister.IdOfItem;
+
+  console.log('excluir',Id);
 
   function refresh() {
     window.location.reload();
   }
   
   function Exclude() { 
+    
     const resposta = api.delete(`Schedule/${Id}`)
     console.log(resposta)
     requestClose()

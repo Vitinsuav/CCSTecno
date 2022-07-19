@@ -10,8 +10,8 @@ type SignInCredentials = {
 
 type AuthContextData = {
     SignIn(credentials: SignInCredentials): Promise<void>;
-    user: User
-    isAuthenticated: boolean,
+    user: User;
+    isAuthenticated: boolean;
 }
 
 type AuthProviderProps = {
@@ -28,7 +28,7 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children } : AuthProviderProps){
 
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User>({} as User);
 
     const isAuthenticated = !!user
 
@@ -39,29 +39,30 @@ export function AuthProvider({ children } : AuthProviderProps){
         }
     }, [])
 
-    async function signIn({login, password}: SignInCredentials){
+    async function SignIn({login, password}: SignInCredentials){
         try { 
             
             const response = await api.post('Auth/signIn', {
             login,
             password
-            })
+            });
 
-            const { token, user } = response.data
-            const { email, name, id} = user
+            const { token, user } = response.data;
+            const { email, name, id} = user;
 
             setCookie(undefined, 'nextauth.token', token,{
                 maxAge: 60 * 60 * 24, 
                 path: '/',
-            })
+            });
 
             setUser({
                 email,
                 id,
                 name
-            })
+            });
         
-        api.defaults.headers['Authorization'] = `Bearer ${token}`
+         
+        api.defaults.headers.common['Authorization'] = `Bearer ${token.toString()}`;
 
         Router.push('/dashboard')
 
@@ -73,7 +74,7 @@ export function AuthProvider({ children } : AuthProviderProps){
     }
     
     return (
-        <AuthContext.Provider value={{signIn, isAuthenticated}}>
+        <AuthContext.Provider value={{SignIn, user, isAuthenticated}}>
             {children}
         </AuthContext.Provider>
     )

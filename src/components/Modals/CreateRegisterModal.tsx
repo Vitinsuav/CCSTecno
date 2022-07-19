@@ -130,7 +130,7 @@ return (
                             sx={{width: '100%'}}
                         >
                        {retornoDasEmpresas.map((empresa : RetornoDasEmpresas) => (         
-                        <MenuItem value={empresa.aptemp_in_codigo}
+                        <MenuItem key={empresa.aptemp_in_codigo} value={empresa.aptemp_in_codigo}
                         >
                             {empresa.aptemp_st_empresa}
                         </MenuItem>  

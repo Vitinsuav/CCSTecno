@@ -13,10 +13,10 @@ import Grid from '@mui/material/Grid';
 const ITEM_HEIGHT = 48;
 
 interface ContextMenuProps {
-  IdOfItem: string
+  IdOfItem: string;
 }
 
-export default function ContextMenu( IdOfItem : ContextMenuProps ) {
+export default function ContextMenu( IdOfItem: ContextMenuProps ) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -29,6 +29,7 @@ export default function ContextMenu( IdOfItem : ContextMenuProps ) {
   const [editRegisterModalOpen, setEditRegisterModalOpen] = React.useState(false);
 
   const handleOpenEditRegisterModal = () => {
+    console.log('editar...');
     setEditRegisterModalOpen(true);
     handleClose();
   }
@@ -76,22 +77,21 @@ export default function ContextMenu( IdOfItem : ContextMenuProps ) {
         }}
       >
           <MenuItem onClick={handleOpenEditRegisterModal}>
-            <Grid container spacing={12}>
-              <Grid item xs={6}>Editar</Grid>
-              <Grid item xs={6}><EditIcon/></Grid>
+            <EditRegisterModal IdOfRegister={IdOfItem} isOpen={editRegisterModalOpen} requestClose={handleCloseEditRegisterModal}></EditRegisterModal>
+            <Grid container >
+              <Grid item xs={10}>Editar</Grid>
+              <Grid item xs={2}><EditIcon/></Grid>
             </Grid>       
           </MenuItem>
           
-          <MenuItem onClick={handleOpenExcluseModal}>
-            <Grid container spacing={12}>
-              <Grid item xs={6}>Excluir</Grid>
-              <Grid item xs={6}><DeleteIcon/></Grid>
+          <MenuItem onClick={handleOpenExcluseModal}> 
+            <ExcluseConfirmationsModal IdOfRegister={IdOfItem} isOpen={excluseModalOpen} requestClose={handleCloseExcluseModal}></ExcluseConfirmationsModal>
+            <Grid container >
+              <Grid item xs={10}>Excluir</Grid>
+              <Grid item xs={2}><DeleteIcon/></Grid>
             </Grid> 
           </MenuItem>
         </Menu>
-    
-    <EditRegisterModal IdOfRegister={IdOfItem} isOpen={editRegisterModalOpen} requestClose={handleCloseEditRegisterModal}></EditRegisterModal>
-    <ExcluseConfirmationsModal IdOfRegister={IdOfItem} isOpen={excluseModalOpen} requestClose={handleCloseExcluseModal}></ExcluseConfirmationsModal>
   </Box>
   
   );

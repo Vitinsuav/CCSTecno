@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { api } from '../../services/api';
 import { FormEvent, useEffect, useState } from 'react';
+import { ContactPageOutlined, Key } from '@mui/icons-material';
 
 const Modalstyle = {
     position: 'absolute' as 'absolute',
@@ -21,7 +22,7 @@ const Modalstyle = {
 
 interface EditRegisterModalProps {
     isOpen: boolean;
-    requestClose: () => void,
+    requestClose: () => void;
     IdOfRegister: {
         IdOfItem: string;
     },
@@ -103,34 +104,31 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
 
     }
 
-    const [ retornoDoLancamento, setRetornoDoLancamento ] = useState<RetornoDoLancamento>({})
+    const [ retornoDoLancamento, setRetornoDoLancamento ] = useState<RetornoDoLancamento>({} as RetornoDoLancamento)
      const recuperaDados = async() => {
         
-     const response = await api.get(`Schedule/${Id}/07_2022`).then(response => setRetornoDoLancamento(response.data)).catch(e => console.log(e))
+     
     }
 
     recuperaDados()
 
     useEffect(() => {
-        setAtividade(retornoDoLancamento.apt_st_atividade)
-        setKmRodado(retornoDoLancamento.apt_re_kmrodado)
-        setPedagio(retornoDoLancamento.apt_re_pedagio)
-        setRefeicao(retornoDoLancamento.apt_st_refeicao)
-        setOrigemDestino(retornoDoLancamento.apt_st_origem_destino)
-        setEntrada(retornoDoLancamento.apt_st_entrada)
-        setIntervalo(retornoDoLancamento.apt_st_intervalo)
-        setSaida(retornoDoLancamento.apt_st_saida)
-    }, [])
+        async function getDados(){
+        console.log('getDados', Id);
+        await api.get(`Schedule/${Id}/07_2022`).then(response => setRetornoDoLancamento(response.data)).catch(e => console.log(e))
+        setAtividade(retornoDoLancamento.apt_st_atividade);
+        setKmRodado(retornoDoLancamento.apt_re_kmrodado);
+        setPedagio(retornoDoLancamento.apt_re_pedagio);
+        setRefeicao(retornoDoLancamento.apt_st_refeicao);
+        setOrigemDestino(retornoDoLancamento.apt_st_origem_destino);
+        setEntrada(retornoDoLancamento.apt_st_entrada);
+        setIntervalo(retornoDoLancamento.apt_st_intervalo);
+        setSaida(retornoDoLancamento.apt_st_saida);
+    }
+    getDados();
+    }, []);
 
-      // useEffect(()=> {
-    //     loadData()
-    // }, [])
 
-    // async function loadData(){
-    //     const chamada = await api.get(`Schedule/${Id}/07_2022`)
-    //     console.log(chamada.data)
-       
-    // }
          
     return (
         <Modal
@@ -175,8 +173,8 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
                                 onChange={e => setEmpresa(e.target.value)}
                                 sx={{width: '100%'}}
                             >
-                            {retornoDasEmpresas.map((empresa) => (         
-                            <MenuItem value={empresa.aptemp_in_codigo}
+                            {retornoDasEmpresas.map((empresa) => (      
+                            <MenuItem key={empresa.aptemp_in_codigo} value={empresa.aptemp_in_codigo}
                             >
                                 {empresa.aptemp_st_empresa}
                             </MenuItem>  

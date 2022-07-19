@@ -160,7 +160,7 @@ export default function Dashboard() {
   return (
     <ThemeProvider theme={theme}>
       <Box>
-        <Content></Content>
+        <Content></Content> 
       </Box>
     </ThemeProvider>
   );
