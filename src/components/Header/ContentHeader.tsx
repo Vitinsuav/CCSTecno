@@ -1,109 +1,31 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import { useState } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, Box, Toolbar, List, Typography, Divider, IconButton, Grid, Button, Avatar } from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Avatar from '@mui/material/Avatar';
 
 import { mainListItems } from './ListItems';
 import RegistersTable from '../Table/Table';
 import CreateRegisterModal from '../Modals/CreateRegisterModal';
-
-const drawerWidth: number = 240;
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  height: 75,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
-
-let theme = createTheme({
-  palette: {
-    primary: {
-      main: '#0346a2',
-      contrastText: '#ffffff'
-      
-    },
-    secondary: {
-      main: '#fff',
-    }, 
-    success: {
-      main:'#079b65', 
-    }
-  },
-  typography: {
-    h5: {
-      fontWeight: 500,
-      fontSize: 26,
-      letterSpacing: 0.5,
-    },
-  },
-});
+import InputMonthModal from '../Modals/InputMonthOfRegistersModal';
+import { AppBar, Drawer, theme } from '../../styles/Header/StyledComponents'
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  const [createRegisterModalOpen, setCreateRegisterModalOpen] = React.useState(false);
+  const [createRegisterModalOpen, setCreateRegisterModalOpen] = useState(false);
   const handleOpenRegisterModal = () => setCreateRegisterModalOpen(true);
   const handleCloseRegisterModal = () => setCreateRegisterModalOpen(false);
+
+  const [InputMonthModalOpen, setInputMonthModalOpen] = useState(false);
+  const handleOpenInputMonthModal = () => setInputMonthModalOpen(true);
+  const handleCloseInputMonthModal = () => setInputMonthModalOpen(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -178,8 +100,15 @@ function DashboardContent() {
         > 
           <Toolbar />
        
-        
-            <Grid style={{marginTop: '30px', marginLeft:'20px', width:'87%'  }} container spacing={0}>
+          <Grid container>
+            <Grid item>
+              <Button onClick={handleOpenInputMonthModal} variant="contained" color="primary" sx={{ color: 'secondary.main' ,marginLeft:'20px', marginTop: '30px'}}> 
+              Mês dos agendamentos 
+              <InputMonthModal isOpen={InputMonthModalOpen} requestClose={handleCloseInputMonthModal}></InputMonthModal>
+              </Button>
+            </Grid>
+          </Grid>
+            <Grid style={{marginTop: '15px', marginLeft:'20px', width:'87%'  }} container spacing={0}>
               <Grid item xs={12}>           
                 <RegistersTable></RegistersTable>              
               </Grid>

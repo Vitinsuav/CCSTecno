@@ -6,20 +6,7 @@ import Modal from '@mui/material/Modal';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { api } from '../../services/api';
 import { FormEvent, useEffect, useState } from 'react';
-import { ContactPageOutlined, Key } from '@mui/icons-material';
-
-const Modalstyle = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 875,
-    height: 500,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    pl: 3,
-};
-
+import { CreateAndEditModalstyle as Modalstyle} from '../../styles/Modals/StyledModal';
 interface EditRegisterModalProps {
     isOpen: boolean;
     requestClose: () => void;
@@ -27,7 +14,6 @@ interface EditRegisterModalProps {
         IdOfItem: string;
     },
 }
-
 interface RetornoDoLancamento {
     aptemp_in_codigo: number,
     apt_dt_data: Date,
@@ -83,7 +69,7 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
         event.preventDefault();
         Put();
         requestClose();
-
+        refresh();
     }
 
     function Put () {
@@ -105,16 +91,12 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
     }
 
     const [ retornoDoLancamento, setRetornoDoLancamento ] = useState<RetornoDoLancamento>({} as RetornoDoLancamento)
-     const recuperaDados = async() => {
-        
-     
-    }
 
-    recuperaDados()
+    console.log(retornoDoLancamento)
 
     useEffect(() => {
         async function getDados(){
-        console.log('getDados', Id);
+         
         await api.get(`Schedule/${Id}/07_2022`).then(response => setRetornoDoLancamento(response.data)).catch(e => console.log(e))
         setAtividade(retornoDoLancamento.apt_st_atividade);
         setKmRodado(retornoDoLancamento.apt_re_kmrodado);
@@ -124,9 +106,9 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
         setEntrada(retornoDoLancamento.apt_st_entrada);
         setIntervalo(retornoDoLancamento.apt_st_intervalo);
         setSaida(retornoDoLancamento.apt_st_saida);
-    }
-    getDados();
-    }, []);
+     }
+     getDados();
+     }, []);
 
 
          
@@ -241,7 +223,7 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
                             required
                             id="outlined-required"
                             label="Pedágio"
-                            type="string"//tipar depois
+                            type="number"//tipar depois
                             value={Pedagio}
                             onChange={e => setPedagio(e.target.value)}
                             sx={{width: '100%'}}
@@ -252,7 +234,7 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
                             required
                             id="outlined-required"
                             label="Refeição"
-                            type="string"//tipar depois
+                            type="number"//tipar depois
                             value={Refeicao}
                             onChange={e => setRefeicao(e.target.value)}
                             sx={{width: '100%'}}
@@ -270,7 +252,7 @@ export default function EditRegisterModal({isOpen, requestClose, IdOfRegister} :
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secondary.main'}}>
+                        <Button type="submit" variant="contained" color="primary" sx={{width: '100%', height: 60, color:'secondary.main'}}>
                             Editar                 
                         </Button>
                     </Grid>

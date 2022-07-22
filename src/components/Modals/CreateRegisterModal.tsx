@@ -1,29 +1,13 @@
 import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import { Box, Button, TextField } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import Modal from '@mui/material/Modal';
+import { useEffect, useState, FormEvent } from 'react';
+import { Box, Button, TextField, MenuItem, Modal, Grid } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { api } from '../../services/api';
-import { useEffect, useState, FormEvent } from 'react';
-
-const Modalstyle = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 875,
-    height: 500,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    pl: 3,
-};
-
+import { CreateAndEditModalstyle as Modalstyle} from '../../styles/Modals/StyledModal';
 interface CreateRegisterModalProps {
     isOpen: boolean;
     requestClose: () => void,
 }
-
 interface RetornoDasEmpresas{
     aptemp_in_codigo: number,
     aptemp_st_empresa: string, 
@@ -83,8 +67,6 @@ export default function CreateRegisterModal({isOpen, requestClose} : CreateRegis
         refresh()
     }
 
-  
-  
     
 return (
     <Modal
@@ -197,7 +179,7 @@ return (
                         required
                         id="outlined-required"
                         label="Pedágio"
-                        type="string"//tipar depois
+                        type="number"//tipar depois
                         value={Pedagio}
                         onChange={e => setPedagio(e.target.value)}
                         sx={{width: '100%'}}
@@ -208,7 +190,7 @@ return (
                         required
                         id="outlined-required"
                         label="Refeição"
-                        type="string"//tipar depois
+                        type="number"//tipar depois
                         value={Refeicao}
                         onChange={e => setRefeicao(e.target.value)}
                         sx={{width: '100%'}}
@@ -226,7 +208,7 @@ return (
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit" sx={{width: '100%', height: 60, backgroundColor: 'success.main', color:'secondary.main'}}>
+                    <Button type="submit" color="success" variant="contained" sx={{width: '100%', height: 60, color:'secondary.main'}}>
                         Cadastrar                  
                     </Button>
                 </Grid>

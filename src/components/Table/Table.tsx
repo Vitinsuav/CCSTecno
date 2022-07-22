@@ -1,31 +1,11 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper'
+import { Table, TableBody, TableContainer, TableHead, Paper }from '@mui/material';
 import ContextMenu from './ContextMenu';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { api } from '../../services/api';
-import { UrlWithStringQuery } from 'url';
-import { Box } from '@mui/system';
+import { AuthContext } from '../../contexts/AuthContext';
+import { StyledTableCell, StyledTableRow } from '../../styles/Tables/StyledTable';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.white,
-      color: theme.palette.common.black,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    
-}));
 interface Data 
   {
     aptemp_in_codigo: number,
@@ -41,32 +21,64 @@ interface Data
     apt_st_origem_destino: string,
     apt_st_refeicao: string,
     apt_in_codigo: string,
-  }
+}
 
-  type ArrayDasEmpresas = Array<Data>
-    
+type ArrayDasEmpresas = Array<Data>
 
 
 export default function RegistersTable() {
 
+  //data atual
+  const date = new Date();
+  const mesatual = date.getMonth() + 1; 
+  const anoatual = date.getFullYear()
+
+  //datas vindas do contexto
+  const { mes } = useContext(AuthContext)
+  const { ano } = useContext(AuthContext)
+
+  //estado das datas para retorno
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
+
   const [ registros, setRegistros ] = useState<ArrayDasEmpresas>([]);
   const [isloading, setIsloading] = useState(true);
+
+  useEffect(() => {
+    setMonth(mes)
+    setYear(ano)
+  })
 
  useEffect(() => {
   async function carregaDados(){
     try{
-    await api.get('Schedule/0/07_2022').then(response => setRegistros(response.data)).catch(e => console.log(e));
+    await api.get(`Schedule/0/${month}_${year}`).then(response => setRegistros(response.data)).catch(e => console.log(e));
     }catch(e){
       console.log(e);
     }finally{
       setIsloading(false);
     }
   }
-  carregaDados();
-  }, []);
-  
-  
 
+  async function carregaDadosPadrao(){
+    try{
+    await api.get(`Schedule/0/0${mesatual}_${anoatual}`).then(response => setRegistros(response.data)).catch(e => console.log(e));
+    }catch(e){
+      console.log(e);
+    }finally{
+      setIsloading(false);
+    }
+  }
+
+  if(mes!=='' && ano!== ''){
+    carregaDados();
+     
+  }else {
+    carregaDadosPadrao();
+  }
+      
+  }, [month]);
+  
   return (
    <div>
     {isloading ? <div></div> : 
@@ -74,7 +86,7 @@ export default function RegistersTable() {
       <TableContainer sx={{ maxHeight: 465 , alignItems: 'center' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow>
+            <StyledTableRow>
               <StyledTableCell>Data</StyledTableCell>
               <StyledTableCell align="center">Cliente</StyledTableCell>
               <StyledTableCell align="center">Entrada</StyledTableCell>
@@ -87,8 +99,7 @@ export default function RegistersTable() {
               <StyledTableCell align="center">Observações Deslocamento</StyledTableCell>
               <StyledTableCell align="center">Refeição</StyledTableCell>
               <StyledTableCell align="center"></StyledTableCell>
-              
-            </TableRow>
+            </StyledTableRow>
           </TableHead>
           <TableBody>
           {registros
@@ -101,7 +112,7 @@ export default function RegistersTable() {
                 <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_entrada}</StyledTableCell>
                 <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_intervalo}</StyledTableCell>
                 <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_saida}</StyledTableCell>
-                <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_diferenca}</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: 20 }}>{registro.apt_st_diferenca.slice(6, 8)}</StyledTableCell>
                 <StyledTableCell align="center" style={{ width: 200}}>{registro.apt_st_atividade}</StyledTableCell>
                 <StyledTableCell align="center">{registro.apt_re_kmrodado}</StyledTableCell>
                 <StyledTableCell align="center">{registro.apt_re_pedagio}</StyledTableCell>

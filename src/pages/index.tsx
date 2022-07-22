@@ -1,5 +1,4 @@
-import type { GetServerSideProps, NextPage } from 'next'
-import Avatar from '@mui/material/Avatar';
+import type { NextPage } from 'next'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,18 +8,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-import { parseCookies } from 'nookies'
-
-const theme = createTheme({
-  palette: {
-  primary: {
-    main: '#0346a2',
-  },
-  secondary: {
-    main: '#f44336',
-  },
-},
-});
+import { Logintheme as theme} from '../styles/Pages/StyledLogin'
 
 const Home: NextPage = () => {
 

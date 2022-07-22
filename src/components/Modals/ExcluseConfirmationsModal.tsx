@@ -4,34 +4,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Grid } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { api } from '../../services/api';
-
-let theme = createTheme({
-  palette: {
-    primary: {
-      light: '#e9380c',
-      main: '#ddbf13',
-      dark: '#1E90FF',
-    },
-    secondary: {
-      main:'#fff',
-    }
-  }})
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  borderRadius: '3px',
-  boxShadow: 24,
-  p: 4,
-};
-
-interface CreateRegisterModalProps {
+import { ExcluseModaltheme as theme, ExcluseModalstyle as Modalstyle} from '../../styles/Modals/StyledModal';
+interface ExcluseModalProps {
     isOpen: boolean;
     requestClose: () => void,
     IdOfRegister: {
@@ -39,14 +15,9 @@ interface CreateRegisterModalProps {
   },
 }
 
-
-
-
-export default function ExcluseConfirmationsModal({isOpen, requestClose, IdOfRegister} : CreateRegisterModalProps) {
+export default function ExcluseConfirmationsModal({isOpen, requestClose, IdOfRegister} : ExcluseModalProps) {
 
   const Id = IdOfRegister.IdOfItem;
-
-  console.log('excluir',Id);
 
   function refresh() {
     window.location.reload();
@@ -68,18 +39,18 @@ export default function ExcluseConfirmationsModal({isOpen, requestClose, IdOfReg
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={Modalstyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Certeza que deseja excluir este cadastro?
           </Typography>
           <Grid sx={{pt: 4}} container spacing={2}>
             <Grid item xs={6}>
-              <Button onClick={requestClose} sx={{backgroundColor: 'primary.main', color:'secondary.main', width: '100%'}}>
+              <Button onClick={requestClose} variant="contained" color="primary" sx={{color:'secondary.main', width: '100%'}}>
                 Cancelar
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button sx={{backgroundColor: 'primary.light', color:'secondary.main', width: '100%'}} onClick={Exclude}>
+              <Button variant="contained" color="error" sx={{color:'secondary.main', width: '100%'}} onClick={Exclude}>
                 Excluir
               </Button>
             </Grid>

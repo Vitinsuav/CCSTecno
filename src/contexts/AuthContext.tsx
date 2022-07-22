@@ -12,6 +12,9 @@ type AuthContextData = {
     SignIn(credentials: SignInCredentials): Promise<void>;
     user: User;
     isAuthenticated: boolean;
+    mes:string;
+    ano:string;
+    Datar(dates: Dates): void;
 }
 
 type AuthProviderProps = {
@@ -24,20 +27,40 @@ type User = {
     name:string,
 }
 
+type Dates = {   
+    mes: string;
+    ano: string;
+}
+
+type Ms = {
+    ms: number
+}
+
 export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children } : AuthProviderProps){
 
+    const [ mes, setMes] = useState('')
+    const [ ano, setAno] = useState('')
+
+    function Datar({mes, ano} : Dates){
+        setMes(mes)
+        setAno(ano)
+    }
+
     const [user, setUser] = useState<User>({} as User);
 
-    const isAuthenticated = !!user
+    const [isAuthenticated, setisAuthenticated] = useState(false);
 
     useEffect(() => {
         const { 'nextauth.token': token} = parseCookies() 
         if(token){
-            //api.get() rota que retorna os dados dos user para que ele tenha salvo no estado
+            setisAuthenticated(true)
+        } else{
+            setisAuthenticated(false)
         }
     }, [])
+
 
     async function SignIn({login, password}: SignInCredentials){
         try { 
@@ -60,13 +83,11 @@ export function AuthProvider({ children } : AuthProviderProps){
                 id,
                 name
             });
-        
          
-        api.defaults.headers.common['Authorization'] = `Bearer ${token.toString()}`;
-
+        api.defaults.headers.common['Authorization'] = `Bearer ${token.toString()}`;      
+        
         Router.push('/dashboard')
-
-        console.log(user)
+        
 
         } catch(e){
             console.log(e)
@@ -74,7 +95,7 @@ export function AuthProvider({ children } : AuthProviderProps){
     }
     
     return (
-        <AuthContext.Provider value={{SignIn, user, isAuthenticated}}>
+        <AuthContext.Provider value={{SignIn, user, isAuthenticated, mes, ano, Datar}}>
             {children}
         </AuthContext.Provider>
     )
